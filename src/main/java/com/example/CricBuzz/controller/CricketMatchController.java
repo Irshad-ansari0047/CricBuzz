@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class CricketMatchController {
 
     private final CricketMatchService cricketMatchService;
+
     @PostMapping("/register")
     public ResponseEntity registerMatch(@RequestBody CricketMatchRequestDto cricketMatchRequestDto,
                                         @RequestParam("teamA-id") int teamAId,
@@ -27,4 +28,6 @@ public class CricketMatchController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
+
+
 }

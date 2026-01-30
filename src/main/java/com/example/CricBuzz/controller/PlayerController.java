@@ -5,19 +5,21 @@ import com.example.CricBuzz.dto.response.PlayerResponseDto;
 import com.example.CricBuzz.exception.PlayerNotFoundException;
 import com.example.CricBuzz.model.Player;
 import com.example.CricBuzz.service.PlayerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/player")
 public class PlayerController {
 
-    @Autowired
-    PlayerService playerService;
+    private final PlayerService playerService;
+
+    public PlayerController(PlayerService playerService) {
+        this.playerService = playerService;
+    }
+
 
     @PostMapping("/save")
     public PlayerResponseDto addPlayer(@RequestBody PlayerRequestDto playerRequestDto){

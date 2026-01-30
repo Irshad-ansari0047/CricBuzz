@@ -42,11 +42,11 @@ public class CricketMatch {
     Status status;
 
 //    relationship between cricketMatch and team
-    @JsonBackReference
     @ManyToMany
     @JoinTable(name = "team_match",
-    joinColumns = @JoinColumn(name = "cricket_match_id"),
-    inverseJoinColumns = @JoinColumn(name = "team_id"))
+        joinColumns = @JoinColumn(name = "cricket_match_id"),
+        inverseJoinColumns = @JoinColumn(name = "team_id")
+    )
     List<Team> teams;
 
 //    relationship between cricketMatch and series

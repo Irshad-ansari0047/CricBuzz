@@ -3,6 +3,7 @@ package com.example.CricBuzz.controller;
 import com.example.CricBuzz.dto.request.ProfileRequestDto;
 import com.example.CricBuzz.exception.PlayerNotFoundException;
 import com.example.CricBuzz.service.ProfileService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/profile")
+@RequiredArgsConstructor
 public class ProfileController {
 
-    @Autowired
-    ProfileService profileService;
+
+    private final ProfileService profileService;
 
     @PostMapping("/save")
     public ResponseEntity<?> addProfile(@RequestBody ProfileRequestDto profileRequestDto, @RequestParam("playerId") int playerId) {

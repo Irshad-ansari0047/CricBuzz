@@ -40,6 +40,6 @@ public class Team {
 
     //    relationship between team and cricketMatch
     @JsonManagedReference
-    @ManyToMany(mappedBy = "teams",cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "teams")
     List<CricketMatch> matches;
 }

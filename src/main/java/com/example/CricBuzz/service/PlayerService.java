@@ -26,10 +26,9 @@ public class PlayerService {
     }
 
     public PlayerResponseDto getPlayerById(int playerId) {
-        Player player = playerRepository.findById(playerId).get();
-        if(player == null){
-            throw new PlayerNotFoundException("invalid Player id");
-        }
+        Player player = playerRepository.findById(playerId)
+                .orElseThrow(() -> new PlayerNotFoundException("Invalid player id: " + playerId));
+
         return PlayerConverter.convertPlayerToPlayerResponseDto(player);
     }
 
@@ -37,7 +36,7 @@ public class PlayerService {
         List<Player> playerList = playerRepository.findAll();
 
         if(playerList.isEmpty()){
-            throw new RuntimeException("no palyer is present");
+            throw new RuntimeException("no player is present");
         }
 
         List<PlayerResponseDto> playerResponses = new ArrayList<>();
@@ -48,12 +47,17 @@ public class PlayerService {
     }
 
     public String deletePlayerId(int playerId) {
+        if(!playerRepository.existsById(playerId)) {
+            throw new PlayerNotFoundException("Invalid id");
+        }
         playerRepository.deleteById(playerId);
+
         return "player with id : "+playerId+ " got deleted";
     }
 
     public PlayerResponseDto updatePlayerById(int playerId, PlayerRequestDto playerRequestDto) {
-        Player player = playerRepository.findById(playerId).get();
+        Player player = playerRepository.findById(playerId)
+                .orElseThrow(() -> new PlayerNotFoundException("Invalid player id: " + playerId));
 
         if(player != null){
             player.setName(playerRequestDto.getName());

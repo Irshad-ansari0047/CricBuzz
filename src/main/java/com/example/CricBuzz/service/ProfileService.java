@@ -21,7 +21,10 @@ public class ProfileService {
     ProfileRepository profileRepository;
 
     public ProfileResponseDto addProfile(ProfileRequestDto profileRequestDto, int playerId) {
-        Player player = playerRepository.findById(playerId).get();
+        Player player = playerRepository.findById(playerId)
+                .orElseThrow(() ->
+                        new PlayerNotFoundException("Invalid Player Id"));
+
         if(player != null) {
            PlayerProfile profile = ProfileConverter.convertProfileRequestDtoToPlayerProfile(profileRequestDto);
 
@@ -37,7 +40,10 @@ public class ProfileService {
     }
 
     public ProfileResponseDto getPlayerProfile(int playerId) {
-        Player player = playerRepository.findById(playerId).get();
+        Player player = playerRepository.findById(playerId)
+                .orElseThrow(() ->
+                        new PlayerNotFoundException("Invalid Player Id"));
+
         if(player == null){
             throw new PlayerNotFoundException("Invalid Player Id");
         }
